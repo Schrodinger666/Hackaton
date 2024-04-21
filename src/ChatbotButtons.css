@@ -1,0 +1,29 @@
+/* ChatbotButtons.css */
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around; /* This will space out the buttons evenly */
+    padding: 10px;
+    background: transparent; /* Light gray background */
+    border-radius: 8px; /* Rounded corners for the container */
+}
+
+.museum, .baiterek, .palace {
+    height: 200px;
+    width: 200px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: 1px solid #0056b3;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.museum {
+    background-image: url();
+}
+
+.chatbot-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}

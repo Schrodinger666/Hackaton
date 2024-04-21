@@ -1,0 +1,23 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  display: flex;
+  margin: 0 auto;
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+  animation: rotateLogo 5s linear infinite; /* 5s is the duration, you can adjust it as needed */
+}
+
+@keyframes rotateLogo {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

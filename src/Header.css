@@ -1,0 +1,18 @@
+.header {
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #7BC9FF;
+    color: #fff;
+    padding: 15px;
+    z-index: 1000; /* Ensure the header is above other content */
+    text-align: center;
+    box-shadow: 0 7px 9px rgba(0, 0, 0, 0.2); /* Add shadow */
+  }
+  
+  .header h2 {
+    margin: 0;
+    text-align: center;
+  }
