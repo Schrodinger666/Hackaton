@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import "./MessageBox.css";
@@ -8,6 +8,15 @@ function MessageBox() {
   const [message, setMessage] = useState("");
   const [generatedText, setGeneratedText] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLat(position.coords.latitude);
+      setLon(position.coords.longitude);
+    });
+  }, []);
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -35,40 +44,45 @@ function MessageBox() {
 
   return (
     <div className="message-box">
-      {generatedText && (
-        <div className="response-box">
-          <h3>Generated Response:</h3>
-          <div className="container">
-            <div>
-              {generatedText.map((museum, index) => (
-                <div
-                  key={index}
-                  style={{
-                    margin: "20px",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <h2>{museum.Place_name}</h2>
-                  <p>
-                    <strong>Категория:</strong> {museum.Category}
-                  </p>
-                  <p>
-                    <strong>Адрес:</strong> {museum.address}
-                  </p>
-                  <p>
-                    <strong>Город:</strong> {museum.city}
-                  </p>
-                  <p>
-                    <strong>Культурное значение:</strong>{" "}
-                    {museum.cult_significance}
-                  </p>
-                </div>
-              ))}
+      <div className="response-container">
+        {generatedText && (
+          <div className="response-box">
+            <h3>Наше предложение</h3>
+            <div className="container">
+              {generatedText.map((museum, index) => {
+                const encoded = encodeURIComponent(museum.address);
+                const url = `https://yandex.com/maps?rtext=${lat},${lon}~${encoded}&rtt=auto`;
+                return (
+                  <div key={index}>
+                    <h2>{museum.Place_name}</h2>
+                    <p>
+                      <strong>Категория:</strong> {museum.Category}
+                    </p>
+                    <p>
+                      <strong>Адрес:</strong> {museum.address}
+                    </p>
+                    <p>
+                      <strong>Город:</strong> {museum.city}
+                    </p>
+                    <p>
+                      <strong>Описание:</strong> {museum.information}
+                    </p>
+                    <p>
+                      <strong>Цена билета:</strong> {museum.tiket_price}
+                    </p>
+                    <p>
+                      <strong>Время работы:</strong> {museum.working_time}
+                    </p>
+                    <a className="link_button" target="_blank" href={url}>
+                      Яндекс Карты
+                    </a>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
       <input
         type="text"
         value={message}
@@ -81,7 +95,7 @@ function MessageBox() {
         className="submit-button"
         disabled={isLoading}
       >
-        {isLoading ? "Loading..." : <ArrowUpwardIcon />}
+        {isLoading ? "..." : <ArrowUpwardIcon />}
       </button>
     </div>
   );
